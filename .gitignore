@@ -1,0 +1,84 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Terraform Backend - KEEP backend configs
+!backend/*.tfvars
+!backend/terraform.tfvars
+
+# Sensitive files
+terraform.tfvars
+secrets.yml
+private_key*
+*.pem
+*.key
+
+# Ansible
+*.retry
+.vault_pass
+host_vars/*/vault.yml
+
+# Kubespray generated
+inventory/hosts.yml
+kubespray/inventory/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.env
+
+# Logs
+*.log
+logs/
+scripts/*.log
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Kubectl configs
+.kube/
+kubeconfig*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.backup
+*.bak
+
+# Archives
+*.tar.gz
+*.zip
+*.rar
+
+# Generated inventory backups
+inventory/hosts.yml.backup
+inventory/hosts.yml.orig
+
+# Monitoring configs (may contain tokens)
+configs/monitoring/secrets/
