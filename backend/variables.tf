@@ -7,10 +7,15 @@ variable "region" {
   type = string
 }
 
+variable "environment" {
+  type = string
+}
+
 locals {
   tags = {
     Project     = var.project
-    Environment = "management"
+    Environment = var.project
     Managed_by  = "terraform"
+    Owner       = "tthau"
   }
 }

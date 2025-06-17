@@ -1,0 +1,24 @@
+# environments/dev/providers.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.region
+
+  default_tags {
+    tags = {
+      Project     = "k8s-cluster"
+      Environment = "dev"
+      Managed_by  = "terraform"
+      Owner       = "devops-team"
+      CostCenter  = "engineering"
+      Compliance  = "required"
+    }
+  }
+}
