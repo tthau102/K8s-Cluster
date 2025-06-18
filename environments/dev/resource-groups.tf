@@ -1,4 +1,8 @@
 # environments/dev/resource-groups.tf
+locals {
+  name_prefix = "${var.owner}-${var.project}-${var.environment}"
+}
+
 resource "aws_resourcegroups_group" "dev_resources" {
   name        = "${local.name_prefix}-resourcesgroup"
   description = "All resources for k8s-pj dev environment"

@@ -45,8 +45,6 @@ variable "owner" {
 }
 
 locals {
-  name_prefix = "${var.owner}-${var.project}-${var.environment}"
-
   tags = {
     Project     = var.project
     Environment = var.environment
