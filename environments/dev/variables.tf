@@ -28,3 +28,29 @@ variable "enable_vpc_endpoints" {
   type        = bool
   default     = true
 }
+
+variable "project" {
+  description = "Project name"
+  type        = string
+}
+
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "owner" {
+  description = "Owner"
+  type        = string
+}
+
+locals {
+  name_prefix = "${var.owner}-${var.project}-${var.environment}"
+
+  tags = {
+    Project     = var.project
+    Environment = var.environment
+    Owner       = var.owner
+    Managed_by  = "terraform"
+  }
+}

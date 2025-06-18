@@ -60,13 +60,13 @@ resource "aws_route_table" "public" {
   })
 }
 
-# Private Route Tables (one per AZ for HA)
+# Private Route Tables
 resource "aws_route_table" "private" {
-  count  = var.enable_nat_gateway ? var.availability_zones_count : 0
+  count  = var.enable_nat_gateway ? var.availability_zones_count : 1
   vpc_id = aws_vpc.main.id
 
   tags = merge(var.additional_tags, {
-    Name = "${local.name_prefix}-private-rt-${count.index + 1}"
+    Name = var.enable_nat_gateway ? "${local.name_prefix}-private-rt-${count.index + 1}" : "${local.name_prefix}-private-rt"
   })
 }
 
@@ -77,9 +77,9 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-# Route Table Associations - Private
+# Route Table Associations - Private  
 resource "aws_route_table_association" "private" {
-  count          = var.enable_nat_gateway ? var.availability_zones_count : 0
+  count          = var.availability_zones_count
   subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private[count.index].id
+  route_table_id = var.enable_nat_gateway ? aws_route_table.private[count.index].id : aws_route_table.private[0].id
 }

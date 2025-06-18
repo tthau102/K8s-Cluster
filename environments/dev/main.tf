@@ -7,9 +7,20 @@ module "vpc" {
   enable_nat_gateway       = var.enable_nat_gateway
   enable_vpc_endpoints     = var.enable_vpc_endpoints
 
+  # additional_tags = {
+  #   Backup            = "required"
+  #   KubernetesCluster = "dev-k8s"
+  #   Tier              = "infrastructure"
+  # }
+}
+
+module "security" {
+  source = "../../modules/security"
+  
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr_block
+  
   additional_tags = {
-    Backup            = "required"
-    KubernetesCluster = "dev-k8s"
-    Tier              = "infrastructure"
+    Component = "security"
   }
 }

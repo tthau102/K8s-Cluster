@@ -12,13 +12,6 @@ provider "aws" {
   region = var.region
 
   default_tags {
-    tags = {
-      Project     = "k8s-cluster"
-      Environment = "dev"
-      Managed_by  = "terraform"
-      Owner       = "devops-team"
-      CostCenter  = "engineering"
-      Compliance  = "required"
-    }
+    tags = local.tags
   }
 }
