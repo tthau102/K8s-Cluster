@@ -46,12 +46,12 @@ variable "private_subnet_ids" {
   type        = list(string)
 }
 
-variable "master_sg_id" {
+variable "master_security_group_id" {
   description = "Security group ID for master nodes"
   type        = string
 }
 
-variable "worker_sg_id" {
+variable "worker_security_group_id" {
   description = "Security group ID for worker nodes"
   type        = string
 }

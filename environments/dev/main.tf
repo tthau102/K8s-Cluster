@@ -30,8 +30,8 @@ module "ec2" {
   
   public_key         = file("~/.ssh/id_rsa.pub") 
   private_subnet_ids = module.vpc.private_subnet_ids
-  master_sg_id       = module.security.k8s_master_sg_id
-  worker_sg_id       = module.security.k8s_worker_sg_id
+  master_security_group_id       = module.security.k8s_master_sg_id
+  worker_security_group_id       = module.security.k8s_worker_sg_id
   
   additional_tags = {
     Component = "compute"

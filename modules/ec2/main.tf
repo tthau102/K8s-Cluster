@@ -25,15 +25,6 @@ resource "aws_key_pair" "k8s_key" {
   })
 }
 
-# User data script for Kubernetes installation
-locals {
-  user_data_script = base64encode(templatefile("${path.module}/user_data.sh", {
-    kubernetes_version = var.kubernetes_version
-    containerd_version = var.containerd_version
-    node_type         = "base" # Will be overridden per instance
-  }))
-}
-
 # Master Nodes
 resource "aws_instance" "master" {
   count                  = var.master_count
