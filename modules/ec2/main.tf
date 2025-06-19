@@ -232,3 +232,17 @@ resource "aws_iam_instance_profile" "k8s_worker" {
     Name = "${local.name_prefix}-worker-profile"
   })
 }
+
+# Add to modules/ec2/main.tf
+
+# Attach SSM policy to master role
+resource "aws_iam_role_policy_attachment" "k8s_master_ssm" {
+  role       = aws_iam_role.k8s_master.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+# Attach SSM policy to worker role  
+resource "aws_iam_role_policy_attachment" "k8s_worker_ssm" {
+  role       = aws_iam_role.k8s_worker.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
