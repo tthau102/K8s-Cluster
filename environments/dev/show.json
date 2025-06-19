@@ -109,6 +109,1648 @@
                 {
                     "resources": [
                         {
+                            "address": "module.ec2.data.aws_ami.ubuntu",
+                            "mode": "data",
+                            "type": "aws_ami",
+                            "name": "ubuntu",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "architecture": "x86_64",
+                                "arn": "arn:aws:ec2:ap-southeast-5::image/ami-0b0fc92e07c19b67f",
+                                "block_device_mappings": [
+                                    {
+                                        "device_name": "/dev/sda1",
+                                        "ebs": {
+                                            "delete_on_termination": "true",
+                                            "encrypted": "false",
+                                            "iops": "0",
+                                            "snapshot_id": "snap-03b308cd1cf670201",
+                                            "throughput": "0",
+                                            "volume_initialization_rate": "0",
+                                            "volume_size": "8",
+                                            "volume_type": "gp2"
+                                        },
+                                        "no_device": "",
+                                        "virtual_name": ""
+                                    },
+                                    {
+                                        "device_name": "/dev/sdb",
+                                        "ebs": {},
+                                        "no_device": "",
+                                        "virtual_name": "ephemeral0"
+                                    },
+                                    {
+                                        "device_name": "/dev/sdc",
+                                        "ebs": {},
+                                        "no_device": "",
+                                        "virtual_name": "ephemeral1"
+                                    }
+                                ],
+                                "boot_mode": "uefi-preferred",
+                                "creation_date": "2025-06-17T06:49:55.000Z",
+                                "deprecation_time": "2027-06-17T06:49:55.000Z",
+                                "description": "Canonical, Ubuntu, 22.04, amd64 jammy image",
+                                "ena_support": true,
+                                "executable_users": null,
+                                "filter": [
+                                    {
+                                        "name": "name",
+                                        "values": [
+                                            "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
+                                        ]
+                                    },
+                                    {
+                                        "name": "virtualization-type",
+                                        "values": [
+                                            "hvm"
+                                        ]
+                                    }
+                                ],
+                                "hypervisor": "xen",
+                                "id": "ami-0b0fc92e07c19b67f",
+                                "image_id": "ami-0b0fc92e07c19b67f",
+                                "image_location": "amazon/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20250617",
+                                "image_owner_alias": "amazon",
+                                "image_type": "machine",
+                                "imds_support": "",
+                                "include_deprecated": false,
+                                "kernel_id": "",
+                                "last_launched_time": "",
+                                "most_recent": true,
+                                "name": "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20250617",
+                                "name_regex": null,
+                                "owner_id": "099720109477",
+                                "owners": [
+                                    "099720109477"
+                                ],
+                                "platform": "",
+                                "platform_details": "Linux/UNIX",
+                                "product_codes": [],
+                                "public": true,
+                                "ramdisk_id": "",
+                                "root_device_name": "/dev/sda1",
+                                "root_device_type": "ebs",
+                                "root_snapshot_id": "snap-03b308cd1cf670201",
+                                "sriov_net_support": "simple",
+                                "state": "available",
+                                "state_reason": {
+                                    "code": "UNSET",
+                                    "message": "UNSET"
+                                },
+                                "tags": {},
+                                "timeouts": null,
+                                "tpm_support": "",
+                                "uefi_data": null,
+                                "usage_operation": "RunInstances",
+                                "virtualization_type": "hvm"
+                            },
+                            "sensitive_values": {
+                                "block_device_mappings": [
+                                    {
+                                        "ebs": {}
+                                    },
+                                    {
+                                        "ebs": {}
+                                    },
+                                    {
+                                        "ebs": {}
+                                    }
+                                ],
+                                "filter": [
+                                    {
+                                        "values": [
+                                            false
+                                        ]
+                                    },
+                                    {
+                                        "values": [
+                                            false
+                                        ]
+                                    }
+                                ],
+                                "owners": [
+                                    false
+                                ],
+                                "product_codes": [],
+                                "state_reason": {},
+                                "tags": {}
+                            }
+                        },
+                        {
+                            "address": "module.ec2.data.aws_default_tags.current",
+                            "mode": "data",
+                            "type": "aws_default_tags",
+                            "name": "current",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "id": "aws",
+                                "tags": {
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                }
+                            },
+                            "sensitive_values": {
+                                "tags": {}
+                            }
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_instance_profile.k8s_master",
+                            "mode": "managed",
+                            "type": "aws_iam_instance_profile",
+                            "name": "k8s_master",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "arn": "arn:aws:iam::187091248012:instance-profile/tth-k8s-pj-dev-master-profile",
+                                "create_date": "2025-06-19T02:48:19Z",
+                                "id": "tth-k8s-pj-dev-master-profile",
+                                "name": "tth-k8s-pj-dev-master-profile",
+                                "name_prefix": "",
+                                "path": "/",
+                                "role": "tth-k8s-pj-dev-master-role",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-master-profile"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-master-profile",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                },
+                                "unique_id": "AIPASXD4B4OGIIZVXKOWP"
+                            },
+                            "sensitive_values": {
+                                "tags": {},
+                                "tags_all": {}
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_role.k8s_master",
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_instance_profile.k8s_worker",
+                            "mode": "managed",
+                            "type": "aws_iam_instance_profile",
+                            "name": "k8s_worker",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "arn": "arn:aws:iam::187091248012:instance-profile/tth-k8s-pj-dev-worker-profile",
+                                "create_date": "2025-06-19T02:48:19Z",
+                                "id": "tth-k8s-pj-dev-worker-profile",
+                                "name": "tth-k8s-pj-dev-worker-profile",
+                                "name_prefix": "",
+                                "path": "/",
+                                "role": "tth-k8s-pj-dev-worker-role",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-worker-profile"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-worker-profile",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                },
+                                "unique_id": "AIPASXD4B4OGL7VDUF2G7"
+                            },
+                            "sensitive_values": {
+                                "tags": {},
+                                "tags_all": {}
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_role.k8s_worker",
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_role.k8s_master",
+                            "mode": "managed",
+                            "type": "aws_iam_role",
+                            "name": "k8s_master",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "arn": "arn:aws:iam::187091248012:role/tth-k8s-pj-dev-master-role",
+                                "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                                "create_date": "2025-06-19T02:48:17Z",
+                                "description": "",
+                                "force_detach_policies": false,
+                                "id": "tth-k8s-pj-dev-master-role",
+                                "inline_policy": [],
+                                "managed_policy_arns": [],
+                                "max_session_duration": 3600,
+                                "name": "tth-k8s-pj-dev-master-role",
+                                "name_prefix": "",
+                                "path": "/",
+                                "permissions_boundary": "",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-master-role"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-master-role",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                },
+                                "unique_id": "AROASXD4B4OGP6356ZONL"
+                            },
+                            "sensitive_values": {
+                                "inline_policy": [],
+                                "managed_policy_arns": [],
+                                "tags": {},
+                                "tags_all": {}
+                            },
+                            "depends_on": [
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_role.k8s_worker",
+                            "mode": "managed",
+                            "type": "aws_iam_role",
+                            "name": "k8s_worker",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "arn": "arn:aws:iam::187091248012:role/tth-k8s-pj-dev-worker-role",
+                                "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                                "create_date": "2025-06-19T02:48:17Z",
+                                "description": "",
+                                "force_detach_policies": false,
+                                "id": "tth-k8s-pj-dev-worker-role",
+                                "inline_policy": [],
+                                "managed_policy_arns": [],
+                                "max_session_duration": 3600,
+                                "name": "tth-k8s-pj-dev-worker-role",
+                                "name_prefix": "",
+                                "path": "/",
+                                "permissions_boundary": "",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-worker-role"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-worker-role",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                },
+                                "unique_id": "AROASXD4B4OGMRFC5ZCZF"
+                            },
+                            "sensitive_values": {
+                                "inline_policy": [],
+                                "managed_policy_arns": [],
+                                "tags": {},
+                                "tags_all": {}
+                            },
+                            "depends_on": [
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_role_policy.k8s_master_policy",
+                            "mode": "managed",
+                            "type": "aws_iam_role_policy",
+                            "name": "k8s_master_policy",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "id": "tth-k8s-pj-dev-master-role:tth-k8s-pj-dev-master-policy",
+                                "name": "tth-k8s-pj-dev-master-policy",
+                                "name_prefix": "",
+                                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ec2:DescribeInstances\",\"ec2:DescribeRegions\",\"ec2:DescribeRouteTables\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeSubnets\",\"ec2:DescribeVolumes\",\"ec2:CreateSecurityGroup\",\"ec2:CreateTags\",\"ec2:CreateVolume\",\"ec2:ModifyInstanceAttribute\",\"ec2:ModifyVolume\",\"ec2:AttachVolume\",\"ec2:AuthorizeSecurityGroupIngress\",\"ec2:CreateRoute\",\"ec2:DeleteRoute\",\"ec2:DeleteSecurityGroup\",\"ec2:DeleteVolume\",\"ec2:DetachVolume\",\"ec2:RevokeSecurityGroupIngress\",\"elasticloadbalancing:*\",\"autoscaling:DescribeAutoScalingGroups\",\"autoscaling:DescribeLaunchConfigurations\",\"autoscaling:DescribeTags\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+                                "role": "tth-k8s-pj-dev-master-role"
+                            },
+                            "sensitive_values": {},
+                            "depends_on": [
+                                "module.ec2.aws_iam_role.k8s_master",
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_iam_role_policy.k8s_worker_policy",
+                            "mode": "managed",
+                            "type": "aws_iam_role_policy",
+                            "name": "k8s_worker_policy",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 0,
+                            "values": {
+                                "id": "tth-k8s-pj-dev-worker-role:tth-k8s-pj-dev-worker-policy",
+                                "name": "tth-k8s-pj-dev-worker-policy",
+                                "name_prefix": "",
+                                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ec2:DescribeInstances\",\"ec2:DescribeRegions\",\"ecr:GetAuthorizationToken\",\"ecr:BatchCheckLayerAvailability\",\"ecr:GetDownloadUrlForLayer\",\"ecr:BatchGetImage\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+                                "role": "tth-k8s-pj-dev-worker-role"
+                            },
+                            "sensitive_values": {},
+                            "depends_on": [
+                                "module.ec2.aws_iam_role.k8s_worker",
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.master[0]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "master",
+                            "index": 0,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-05d054b715081d46d",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5a",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-master-profile",
+                                "id": "i-05d054b715081d46d",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.medium",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-0a2d3c323fed7dd4f",
+                                "private_dns": "ip-10-25-10-153.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.10.153",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-master-1-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-master-1-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-021dd94316ce767e8",
+                                        "volume_size": 20,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-038245452c18fdcd3",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-master-1",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-master-1",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "4514cd27a0b9353333b3a4139f8d60fee5da16f8",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-031d7360941b108e9"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_master",
+                                "module.ec2.aws_iam_role.k8s_master",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.master[1]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "master",
+                            "index": 1,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-0e378cdf6efb69dbd",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5b",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-master-profile",
+                                "id": "i-0e378cdf6efb69dbd",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.medium",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-0536d9955421d6fba",
+                                "private_dns": "ip-10-25-11-41.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.11.41",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-master-2-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-master-2-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-09141cf850b125794",
+                                        "volume_size": 20,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-0cebcc97620a59c5c",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-master-2",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-master-2",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "a29766ffcdb7ba64223ad33131cc2c45b9c8eef5",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-031d7360941b108e9"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_master",
+                                "module.ec2.aws_iam_role.k8s_master",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.master[2]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "master",
+                            "index": 2,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-051389854f6151a6a",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5c",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-master-profile",
+                                "id": "i-051389854f6151a6a",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.medium",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-020c02e3bab26dd34",
+                                "private_dns": "ip-10-25-12-136.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.12.136",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-master-3-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-master-3-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-0bb643120977a356b",
+                                        "volume_size": 20,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-022bead9e9bf1881a",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-master-3",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-master-3",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "control-plane",
+                                    "Type": "k8s-master",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "06fc5e6af0ec1e1b27d32557f0b5f7de3e9369fe",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-031d7360941b108e9"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_master",
+                                "module.ec2.aws_iam_role.k8s_master",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.worker[0]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "worker",
+                            "index": 0,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-063f0c6fe4f1ae217",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5a",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-worker-profile",
+                                "id": "i-063f0c6fe4f1ae217",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.large",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-03301b93fed1c9c4d",
+                                "private_dns": "ip-10-25-10-82.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.10.82",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-worker-1-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-worker-1-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-0e564fda701ed8c01",
+                                        "volume_size": 30,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-038245452c18fdcd3",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-worker-1",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-worker-1",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "57820cc7fd42951b0ea3bf0c844463bbc6364388",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-046de11f549086969"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_worker",
+                                "module.ec2.aws_iam_role.k8s_worker",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.aws_security_group.k8s_worker",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.worker[1]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "worker",
+                            "index": 1,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-0740cb3a5ae523e62",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5b",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-worker-profile",
+                                "id": "i-0740cb3a5ae523e62",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.large",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-0a509944e3ecf7451",
+                                "private_dns": "ip-10-25-11-216.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.11.216",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-worker-2-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-worker-2-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-09240a9e54fc10a26",
+                                        "volume_size": 30,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-0cebcc97620a59c5c",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-worker-2",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-worker-2",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "2365db95eed8ec73483157aed7a8259fdf279f9a",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-046de11f549086969"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_worker",
+                                "module.ec2.aws_iam_role.k8s_worker",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.aws_security_group.k8s_worker",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_instance.worker[2]",
+                            "mode": "managed",
+                            "type": "aws_instance",
+                            "name": "worker",
+                            "index": 2,
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "ami": "ami-0b0fc92e07c19b67f",
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:instance/i-0415bfea1805cb24c",
+                                "associate_public_ip_address": false,
+                                "availability_zone": "ap-southeast-5c",
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_preference": "open",
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_core_count": 1,
+                                "cpu_options": [
+                                    {
+                                        "amd_sev_snp": "",
+                                        "core_count": 1,
+                                        "threads_per_core": 2
+                                    }
+                                ],
+                                "cpu_threads_per_core": 2,
+                                "credit_specification": [
+                                    {
+                                        "cpu_credits": "unlimited"
+                                    }
+                                ],
+                                "disable_api_stop": false,
+                                "disable_api_termination": false,
+                                "ebs_block_device": [],
+                                "ebs_optimized": false,
+                                "enable_primary_ipv6": null,
+                                "enclave_options": [
+                                    {
+                                        "enabled": false
+                                    }
+                                ],
+                                "ephemeral_block_device": [],
+                                "get_password_data": false,
+                                "hibernation": false,
+                                "host_id": "",
+                                "host_resource_group_arn": null,
+                                "iam_instance_profile": "tth-k8s-pj-dev-worker-profile",
+                                "id": "i-0415bfea1805cb24c",
+                                "instance_initiated_shutdown_behavior": "stop",
+                                "instance_lifecycle": "",
+                                "instance_market_options": [],
+                                "instance_state": "running",
+                                "instance_type": "t3.large",
+                                "ipv6_address_count": 0,
+                                "ipv6_addresses": [],
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {
+                                        "auto_recovery": "default"
+                                    }
+                                ],
+                                "metadata_options": [
+                                    {
+                                        "http_endpoint": "enabled",
+                                        "http_protocol_ipv6": "disabled",
+                                        "http_put_response_hop_limit": 1,
+                                        "http_tokens": "optional",
+                                        "instance_metadata_tags": "disabled"
+                                    }
+                                ],
+                                "monitoring": false,
+                                "network_interface": [],
+                                "outpost_arn": "",
+                                "password_data": "",
+                                "placement_group": "",
+                                "placement_partition_number": 0,
+                                "primary_network_interface_id": "eni-056c0298420251064",
+                                "private_dns": "ip-10-25-12-242.ap-southeast-5.compute.internal",
+                                "private_dns_name_options": [
+                                    {
+                                        "enable_resource_name_dns_a_record": false,
+                                        "enable_resource_name_dns_aaaa_record": false,
+                                        "hostname_type": "ip-name"
+                                    }
+                                ],
+                                "private_ip": "10.25.12.242",
+                                "public_dns": "",
+                                "public_ip": "",
+                                "root_block_device": [
+                                    {
+                                        "delete_on_termination": true,
+                                        "device_name": "/dev/sda1",
+                                        "encrypted": true,
+                                        "iops": 3000,
+                                        "kms_key_id": "arn:aws:kms:ap-southeast-5:187091248012:key/b5e0b578-8fd2-4cd8-8ce7-fe78ae7cf2c0",
+                                        "tags": {
+                                            "Component": "compute",
+                                            "Name": "tth-k8s-pj-dev-worker-3-root"
+                                        },
+                                        "tags_all": {
+                                            "Component": "compute",
+                                            "Environment": "dev",
+                                            "Managed_by": "terraform",
+                                            "Name": "tth-k8s-pj-dev-worker-3-root",
+                                            "Owner": "tth",
+                                            "Project": "k8s-pj"
+                                        },
+                                        "throughput": 125,
+                                        "volume_id": "vol-07a50e872894911b4",
+                                        "volume_size": 30,
+                                        "volume_type": "gp3"
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "source_dest_check": true,
+                                "spot_instance_request_id": "",
+                                "subnet_id": "subnet-022bead9e9bf1881a",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-worker-3",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-worker-3",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj",
+                                    "Role": "worker",
+                                    "Type": "k8s-worker",
+                                    "kubernetes.io/cluster/tth-k8s-pj-dev": "owned"
+                                },
+                                "tenancy": "default",
+                                "timeouts": null,
+                                "user_data": "ab0df9277b8708e7afb61bffa41338dfb9c9cca3",
+                                "user_data_base64": null,
+                                "user_data_replace_on_change": false,
+                                "volume_tags": null,
+                                "vpc_security_group_ids": [
+                                    "sg-046de11f549086969"
+                                ]
+                            },
+                            "sensitive_values": {
+                                "capacity_reservation_specification": [
+                                    {
+                                        "capacity_reservation_target": []
+                                    }
+                                ],
+                                "cpu_options": [
+                                    {}
+                                ],
+                                "credit_specification": [
+                                    {}
+                                ],
+                                "ebs_block_device": [],
+                                "enclave_options": [
+                                    {}
+                                ],
+                                "ephemeral_block_device": [],
+                                "instance_market_options": [],
+                                "ipv6_addresses": [],
+                                "launch_template": [],
+                                "maintenance_options": [
+                                    {}
+                                ],
+                                "metadata_options": [
+                                    {}
+                                ],
+                                "network_interface": [],
+                                "private_dns_name_options": [
+                                    {}
+                                ],
+                                "root_block_device": [
+                                    {
+                                        "tags": {},
+                                        "tags_all": {}
+                                    }
+                                ],
+                                "secondary_private_ips": [],
+                                "security_groups": [],
+                                "tags": {},
+                                "tags_all": {},
+                                "vpc_security_group_ids": [
+                                    false
+                                ]
+                            },
+                            "depends_on": [
+                                "module.ec2.aws_iam_instance_profile.k8s_worker",
+                                "module.ec2.aws_iam_role.k8s_worker",
+                                "module.ec2.aws_key_pair.k8s_key",
+                                "module.ec2.data.aws_ami.ubuntu",
+                                "module.ec2.data.aws_default_tags.current",
+                                "module.security.aws_security_group.k8s_master",
+                                "module.security.aws_security_group.k8s_worker",
+                                "module.security.data.aws_default_tags.current",
+                                "module.vpc.aws_subnet.private",
+                                "module.vpc.aws_vpc.main",
+                                "module.vpc.data.aws_availability_zones.available",
+                                "module.vpc.data.aws_default_tags.current"
+                            ]
+                        },
+                        {
+                            "address": "module.ec2.aws_key_pair.k8s_key",
+                            "mode": "managed",
+                            "type": "aws_key_pair",
+                            "name": "k8s_key",
+                            "provider_name": "registry.terraform.io/hashicorp/aws",
+                            "schema_version": 1,
+                            "values": {
+                                "arn": "arn:aws:ec2:ap-southeast-5:187091248012:key-pair/tth-k8s-pj-dev-key",
+                                "fingerprint": "80:f6:1c:9b:6d:d6:1b:7b:44:5d:41:f5:16:24:ee:04",
+                                "id": "tth-k8s-pj-dev-key",
+                                "key_name": "tth-k8s-pj-dev-key",
+                                "key_name_prefix": "",
+                                "key_pair_id": "key-0bb64dc27c940bbfd",
+                                "key_type": "rsa",
+                                "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC90wpsDwb4Ul2rktyAnUk9YDB2gBH2Vlv0j/O4ObQoOgCWLy3R7GVUgkuBvQyd0llIbtuach8mji9l7GjDqj/+fOLwBYFAQNss/trePSqEPLdTw9N3XS9OuQE6X3D06EvpGWktZyRj6ny3ObJ+NcWpYm5D+a3J5uo8ynhpyvbYYcjKzKoWQADLIsNp4JDW7X4ggTJunCsDY/tjlFlxxZ/9gWnsvlQ2OGsTI/wmI0u/EQD81HphWC9DSdu/WsQqgROj9qI8nmzyrMuNK4CppHHorzHt31tQLPHiWXhYe9CnMxrQiBQwhXRQfu4k7FTcJf/rRJhhcX+jEeTBftq2NGzOtwaxneMbm+O0TTF2Yzk6/2yLUB8D1Da/Z25CM5lt5IgJTCuUmN8mpzcACss61mP1qxD9mr5l7Pg/OKk0aWpNeBLdTeeRXLEDFe+lDvNYmDEuqoiNfyc8Nnv94ceNdFz1atY4TZcJrI1xqoSxuFyiltvdgCK30azDX70wW87iswE= ubuntu@XPS-9310-TTH0102",
+                                "tags": {
+                                    "Component": "compute",
+                                    "Name": "tth-k8s-pj-dev-key"
+                                },
+                                "tags_all": {
+                                    "Component": "compute",
+                                    "Environment": "dev",
+                                    "Managed_by": "terraform",
+                                    "Name": "tth-k8s-pj-dev-key",
+                                    "Owner": "tth",
+                                    "Project": "k8s-pj"
+                                }
+                            },
+                            "sensitive_values": {
+                                "tags": {},
+                                "tags_all": {}
+                            },
+                            "depends_on": [
+                                "module.ec2.data.aws_default_tags.current"
+                            ]
+                        }
+                    ],
+                    "address": "module.ec2"
+                },
+                {
+                    "resources": [
+                        {
                             "address": "module.security.data.aws_default_tags.current",
                             "mode": "data",
                             "type": "aws_default_tags",
@@ -440,7 +2082,7 @@
                                 "egress": [
                                     {
                                         "cidr_blocks": [
-                                            "10.25.0.0/16"
+                                            "0.0.0.0/0"
                                         ],
                                         "description": "",
                                         "from_port": 0,
