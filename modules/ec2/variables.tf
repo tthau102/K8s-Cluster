@@ -1,40 +1,4 @@
 # modules/ec2/variables.tf
-variable "vpc_id" {
-  description = "VPC ID"
-  type        = string
-}
-
-variable "private_subnet_ids" {
-  description = "Private subnet IDs"
-  type        = list(string)
-}
-
-variable "public_subnet_ids" {
-  description = "Public subnet IDs"
-  type        = list(string)
-}
-
-variable "master_sg_id" {
-  description = "Master security group ID"
-  type        = string
-}
-
-variable "worker_sg_id" {
-  description = "Worker security group ID"
-  type        = string
-}
-
-variable "master_instance_type" {
-  description = "Master instance type"
-  type        = string
-  default     = "t3.medium"
-}
-
-variable "worker_instance_type" {
-  description = "Worker instance type"
-  type        = string
-  default     = "t3.medium"
-}
 
 variable "master_count" {
   description = "Number of master nodes"
@@ -48,13 +12,52 @@ variable "worker_count" {
   default     = 3
 }
 
-variable "key_pair_name" {
-  description = "EC2 Key Pair name"
+variable "master_instance_type" {
+  description = "Instance type for master nodes"
+  type        = string
+  default     = "t3.medium"
+}
+
+variable "worker_instance_type" {
+  description = "Instance type for worker nodes"
+  type        = string
+  default     = "t3.large"
+}
+
+variable "kubernetes_version" {
+  description = "Kubernetes version to install"
+  type        = string
+  default     = "1.28"
+}
+
+variable "containerd_version" {
+  description = "Containerd version to install"
+  type        = string
+  default     = "1.6.24-1"
+}
+
+variable "public_key" {
+  description = "Public key for SSH access"
+  type        = string
+}
+
+variable "private_subnet_ids" {
+  description = "List of private subnet IDs"
+  type        = list(string)
+}
+
+variable "master_sg_id" {
+  description = "Security group ID for master nodes"
+  type        = string
+}
+
+variable "worker_sg_id" {
+  description = "Security group ID for worker nodes"
   type        = string
 }
 
 variable "additional_tags" {
-  description = "Additional tags"
+  description = "Additional tags to merge with default provider tags"
   type        = map(string)
   default     = {}
 }

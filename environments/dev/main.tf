@@ -24,3 +24,16 @@ module "security" {
     Component = "security"
   }
 }
+
+module "ec2" {
+  source = "../../modules/ec2"
+  
+  public_key         = file("~/.ssh/id_rsa.pub") 
+  private_subnet_ids = module.vpc.private_subnet_ids
+  master_sg_id       = module.security.k8s_master_sg_id
+  worker_sg_id       = module.security.k8s_worker_sg_id
+  
+  additional_tags = {
+    Component = "compute"
+  }
+}
