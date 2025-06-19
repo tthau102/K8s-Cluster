@@ -1,3 +1,7 @@
+*.json
+plan*
+show*
+
 # Terraform
 *.tfstate
 *.tfstate.*
