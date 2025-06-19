@@ -35,13 +35,6 @@ resource "aws_instance" "master" {
   subnet_id             = var.private_subnet_ids[count.index % length(var.private_subnet_ids)]
   iam_instance_profile  = aws_iam_instance_profile.k8s_master.name
 
-  user_data = base64encode(templatefile("${path.module}/user_data.sh", {
-    kubernetes_version = var.kubernetes_version
-    containerd_version = var.containerd_version
-    node_type         = "master"
-    node_index        = count.index + 1
-  }))
-
   root_block_device {
     volume_type           = "gp3"
     volume_size          = 20
@@ -74,13 +67,6 @@ resource "aws_instance" "worker" {
   vpc_security_group_ids = [var.worker_security_group_id]
   subnet_id             = var.private_subnet_ids[count.index % length(var.private_subnet_ids)]
   iam_instance_profile  = aws_iam_instance_profile.k8s_worker.name
-
-  user_data = base64encode(templatefile("${path.module}/user_data.sh", {
-    kubernetes_version = var.kubernetes_version
-    containerd_version = var.containerd_version
-    node_type         = "worker"
-    node_index        = count.index + 1
-  }))
 
   root_block_device {
     volume_type           = "gp3"

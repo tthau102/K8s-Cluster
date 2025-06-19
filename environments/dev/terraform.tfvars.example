@@ -1,0 +1,22 @@
+# terraform.tfvars.example
+# Copy to terraform.tfvars và điền giá trị thực tế
+
+# Required Variables
+project     = "k8s-pj"
+environment = "dev"  
+owner       = "tth"
+
+# Network Configuration
+region                   = "ap-southeast-5"  # Đồng nhất với backend.tf
+vpc_cidr                = "10.0.0.0/16"
+availability_zones_count = 3
+enable_nat_gateway      = true
+enable_vpc_endpoints    = true
+
+# K8s Cluster Configuration
+master_count         = 3
+worker_count         = 3
+master_instance_type = "t3.medium"
+worker_instance_type = "t3.large"
+kubernetes_version   = "1.28"
+containerd_version   = "1.6.24-1"

@@ -2,7 +2,7 @@
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "ap-southeast-1"
+  default     = "ap-southeast-5" 
 }
 
 variable "vpc_cidr" {
@@ -29,6 +29,44 @@ variable "enable_vpc_endpoints" {
   default     = true
 }
 
+# EC2 Variables - THIẾU TRƯỚC ĐÂY
+variable "master_count" {
+  description = "Number of master nodes"
+  type        = number
+  default     = 3
+}
+
+variable "worker_count" {
+  description = "Number of worker nodes"  
+  type        = number
+  default     = 3
+}
+
+variable "master_instance_type" {
+  description = "Instance type for master nodes"
+  type        = string
+  default     = "t3.medium"
+}
+
+variable "worker_instance_type" {
+  description = "Instance type for worker nodes"
+  type        = string
+  default     = "t3.large"
+}
+
+variable "kubernetes_version" {
+  description = "Kubernetes version to install"
+  type        = string
+  default     = "1.28"
+}
+
+variable "containerd_version" {
+  description = "Containerd version to install"
+  type        = string
+  default     = "1.6.24-1"
+}
+
+# Core Variables
 variable "project" {
   description = "Project name"
   type        = string
