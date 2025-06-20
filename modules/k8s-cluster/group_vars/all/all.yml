@@ -1,0 +1,26 @@
+# modules/k8s-cluster/all.yml.tpl
+---
+## Directory where the binaries will be installed
+bin_dir: /usr/local/bin
+
+kube_version: 1.31.0
+
+## Cluster settings
+cluster_name: tth-k8s-cluster
+kube_network_plugin: calico
+dns_mode: coredns
+enable_nodelocaldns: true
+container_manager: containerd
+
+## Network settings
+kube_service_addresses: 10.233.0.0/18
+kube_pods_subnet: 10.233.64.0/18
+kube_network_node_prefix: 24
+
+## API server
+kube_apiserver_port: 6443
+loadbalancer_apiserver_port: 6443
+
+## NTP Settings
+ntp_enabled: false
+

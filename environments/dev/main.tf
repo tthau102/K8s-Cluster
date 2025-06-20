@@ -67,7 +67,7 @@ module "k8s_cluster" {
     }
   ]
 
-  bastion_ip           = module.ec2.bastion_public_ip
+  bastion_ip           = aws_instance.bastion.public_ip
   ssh_private_key_path = "~/.ssh/id_rsa"
   kube_version         = "1.31.0"
 }

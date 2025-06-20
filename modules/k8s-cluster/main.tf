@@ -24,49 +24,62 @@ resource "local_file" "create_dirs" {
   content  = ""
 }
 
-# Run Kubespray
-resource "null_resource" "run_kubespray" {
+# Upload files to bastion
+resource "null_resource" "upload_files" {
   triggers = {
     inventory_hash = local_file.ansible_inventory.content
     vars_hash      = local_file.ansible_vars.content
   }
 
-  provisioner "local-exec" {
-    command = <<-EOT
-      cd ${path.module}
-      
-      # Clone kubespray if not exists
-      if [ ! -d "kubespray" ]; then
-        git clone https://github.com/kubernetes-sigs/kubespray.git
-        cd kubespray
-        git checkout v2.28.0
-        cd ..
-      fi
-      
-      # Create inventory directory
-      mkdir -p kubespray/inventory/${var.cluster_name}/group_vars/all
-      
-      # Copy inventory and vars
-      cp inventory.ini kubespray/inventory/${var.cluster_name}/
-      cp group_vars/all/all.yml kubespray/inventory/${var.cluster_name}/group_vars/all/
-      
-      # Copy sample configs (k8s-cluster vars)
-      cp -r kubespray/inventory/sample/group_vars/k8s_cluster kubespray/inventory/${var.cluster_name}/group_vars/ || true
-      
-      # Wait for instances to be ready
-      sleep 60
-      
-      # Run kubespray via Docker
-      docker run --rm \
-        --mount type=bind,source="$(pwd)/kubespray",target=/kubespray \
-        --mount type=bind,source="${var.ssh_private_key_path}",target=/root/.ssh/id_rsa,readonly \
-        quay.io/kubespray/kubespray:v2.28.0 \
-        ansible-playbook -i inventory/${var.cluster_name}/inventory.ini \
-        --become --become-user=root cluster.yml
-    EOT
+  # Upload inventory file
+  provisioner "file" {
+    source      = local_file.ansible_inventory.filename
+    destination = "/tmp/inventory.ini"
 
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
+    }
+  }
+
+  # Upload ansible vars
+  provisioner "file" {
+    source      = local_file.ansible_vars.filename
+    destination = "/tmp/all.yml"
+
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
+    }
+  }
+
+  # Upload deploy script
+  provisioner "file" {
+    source      = "${path.module}/deploy.sh"
+    destination = "/tmp/deploy.sh"
+
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
+    }
+  }
+
+  # Upload kubeconfig script
+  provisioner "file" {
+    source      = "${path.module}/get-kubeconfig.sh"
+    destination = "/tmp/get-kubeconfig.sh"
+
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
     }
   }
 
@@ -76,26 +89,75 @@ resource "null_resource" "run_kubespray" {
   ]
 }
 
-# Copy kubeconfig from master
+# Run Kubespray deployment
+resource "null_resource" "run_kubespray" {
+  triggers = {
+    inventory_hash = local_file.ansible_inventory.content
+    vars_hash      = local_file.ansible_vars.content
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/deploy.sh",
+      "/tmp/deploy.sh ${var.cluster_name} ${join(" ", [for inst in var.master_instances : inst.private_ip])} ${join(" ", [for inst in var.worker_instances : inst.private_ip])}"
+    ]
+
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
+    }
+  }
+
+  depends_on = [null_resource.upload_files]
+}
+
+# Get kubeconfig from master
 resource "null_resource" "get_kubeconfig" {
+  triggers = {
+    cluster_instance_ids = join(",", [for inst in var.master_instances : inst.id])
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/get-kubeconfig.sh",
+      "/tmp/get-kubeconfig.sh ${var.master_instances[0].private_ip} ${var.kube_version}"
+    ]
+
+    connection {
+      type        = "ssh"
+      host        = var.bastion_ip
+      user        = "ubuntu"
+      private_key = file(var.ssh_private_key_path)
+    }
+  }
+
+  depends_on = [null_resource.run_kubespray]
+}
+
+# Create local kubeconfig for external access (optional)
+resource "null_resource" "create_local_kubeconfig" {
   triggers = {
     cluster_instance_ids = join(",", [for inst in var.master_instances : inst.id])
   }
 
   provisioner "local-exec" {
     command = <<-EOT
+      # Create local kubeconfig directory
       mkdir -p ${path.module}
+      
+      # Download kubeconfig from bastion
       scp -i ${var.ssh_private_key_path} \
           -o StrictHostKeyChecking=no \
-          -o ProxyCommand="ssh -i ${var.ssh_private_key_path} -W %h:%p ubuntu@${var.bastion_ip}" \
-          ubuntu@${var.master_instances[0].private_ip}:/home/ubuntu/.kube/config \
+          ubuntu@${var.bastion_ip}:~/.kube/config \
           ${path.module}/kubeconfig
       
-      # Update server endpoint to use bastion
-      sed -i 's|server:.*|server: https://${var.bastion_ip}:6443|g' ${path.module}/kubeconfig
+      # Update server to use bastion as proxy (for external access)
+      sed -i 's|server:.*|server: https://${var.bastion_ip}:6443|g' ${path.module}/kubeconfig || \
+      sed -i '' 's|server:.*|server: https://${var.bastion_ip}:6443|g' ${path.module}/kubeconfig
     EOT
   }
 
-  depends_on = [null_resource.run_kubespray]
+  depends_on = [null_resource.get_kubeconfig]
 }
-

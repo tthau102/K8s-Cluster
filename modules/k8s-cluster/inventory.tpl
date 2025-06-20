@@ -28,3 +28,10 @@ ${cluster_name}-worker-${idx + 1}
 kube_control_plane
 kube_node
 calico_rr
+
+[all:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/root/.ssh/id_rsa
+ansible_python_interpreter=/usr/bin/python3
+host_key_checking=False
+EOF
