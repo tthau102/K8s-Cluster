@@ -46,3 +46,28 @@ module "ec2" {
     Component = "compute"
   }
 }
+
+
+module "k8s_cluster" {
+  source = "../../modules/k8s-cluster"
+
+  cluster_name = "tth-k8s-cluster"
+
+  master_instances = [
+    for i, ip in module.ec2.master_private_ips : {
+      private_ip = ip
+      id         = module.ec2.master_instance_ids[i]
+    }
+  ]
+
+  worker_instances = [
+    for i, ip in module.ec2.worker_private_ips : {
+      private_ip = ip
+      id         = module.ec2.worker_instance_ids[i]
+    }
+  ]
+
+  bastion_ip           = module.ec2.bastion_public_ip
+  ssh_private_key_path = "~/.ssh/id_rsa"
+  kube_version         = "1.31.0"
+}
