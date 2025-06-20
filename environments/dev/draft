@@ -1,0 +1,59 @@
+echo "
+ 10.0.10.110 master01
+ 10.0.11.7 master02
+ 10.0.12.85 master03
+ 10.0.10.102 worker01
+ 10.0.11.94 worker02
+ 10.0.12.60 worker03" | sudo tee -a /etc/hosts
+
+
+# ## Configure 'ip' variable to bind kubernetes services on a
+# ## different ip than the default iface
+# ## We should set etcd_member_name for etcd cluster. The node that is not a etcd member do not need to set the value, or can set the empty string value.
+[all]
+master01    ansible_host=10.0.10.110   ip=10.0.10.110
+master02    ansible_host=10.0.11.7   ip=10.0.11.7
+master03    ansible_host=10.0.12.85   ip=10.0.12.85
+worker01    ansible_host=10.0.10.102   ip=10.0.10.102
+worker02    ansible_host=10.0.11.94   ip=10.0.11.94
+worker03    ansible_host=10.0.12.60   ip=10.0.12.60
+
+# ## configure a bastion host if your nodes are not directly reachable
+# [bastion]
+# bastion ansible_host=x.x.x.x ansible_user=some_user
+
+[kube_control_plane]
+master01
+master02
+master03
+
+
+[etcd]
+master01
+master02
+master03
+
+[kube_node]
+worker01
+worker02
+worker03
+
+[calico_rr]
+
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
+
+
+
+curl -fsSL https://get.docker.com/ | sh
+
+sudo usermod -aG docker ubuntu
+
+docker run --rm -it --mount type=bind,source=/home/ubuntu/kubernetes_installation/kubespray/inventory/tth-cluster,dst=/inventory \
+  --mount type=bind,source=/home/ubuntu/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
+  --mount type=bind,source=/home/ubuntu/.ssh/id_rsa,dst=/home/ubuntu/.ssh/id_rsa \
+  quay.io/kubespray/kubespray:v2.16.0 bash 
+
+ansible-playbook -i /inventory/hosts.yaml cluster.yml --user=ubuntu --become

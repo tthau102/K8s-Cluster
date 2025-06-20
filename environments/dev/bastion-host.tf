@@ -46,11 +46,36 @@ resource "aws_security_group" "bastion" {
 # Bastion Host Instance
 resource "aws_instance" "bastion" {
   ami                         = data.aws_ami.bastion_ubuntu.id
-  instance_type               = "t3.micro"
+  instance_type               = "t3.medium"
   key_name                    = "${var.owner}-${var.project}-${var.environment}-key"
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   subnet_id                   = module.vpc.public_subnet_ids[0]
   associate_public_ip_address = true
+
+  connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+    }
+
+  provisioner "file" {
+    source = "~/.ssh/id_rsa"
+    destination = "/home/ubuntu/.ssh/id_rsa"
+  }
+
+  provisioner "file" {
+    source = "~/.ssh/id_rsa.pub"
+    destination = "/home/ubuntu/.ssh/id_rsa.pub"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chown -R $USER:$USER ~/.ssh",
+      "chmod 700 ~/.ssh", 
+      "chmod 600 ~/.ssh/id_rsa ~/.ssh/authorized_keys"
+    ]
+  }
 
   root_block_device {
     volume_type           = "gp3"
@@ -69,6 +94,7 @@ resource "aws_instance" "bastion" {
   })
 }
 
+
 # Output bastion information
 output "bastion_public_ip" {
   description = "Public IP of bastion host"
@@ -79,3 +105,4 @@ output "bastion_ssh_command" {
   description = "SSH command to connect to bastion"
   value       = "ssh -i ~/.ssh/id_rsa ubuntu@${aws_instance.bastion.public_ip}"
 }
+
