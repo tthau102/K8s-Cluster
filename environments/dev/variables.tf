@@ -2,13 +2,13 @@
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "ap-southeast-5" 
+  default     = "ap-southeast-5"
 }
 
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "10.25.0.0/16"
 }
 
 variable "availability_zones_count" {
@@ -37,7 +37,7 @@ variable "master_count" {
 }
 
 variable "worker_count" {
-  description = "Number of worker nodes"  
+  description = "Number of worker nodes"
   type        = number
   default     = 3
 }
