@@ -30,8 +30,8 @@ module "alb" {
   }
 
   # Target Groups cho K8s services
-  target_groups = [
-    {
+  target_groups = {
+    k8s-ingress = {
       name     = "${local.name_prefix}-k8s-ingress-tg"
       port     = 30080 # NodePort cho ingress controller
       protocol = "HTTP"
@@ -52,50 +52,58 @@ module "alb" {
       # Target registration - worker nodes
       targets = {
         for i, instance in module.k8s_workers : "worker-${i}" => {
-          target_id = instance.id
-          port      = 30080
+          id   = instance.id
+          port = 30080
         }
       }
     }
-  ]
-
-}
-
-# HTTP Listener - redirect to HTTPS
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = module.alb.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
   }
 
+  # Listeners configuration
+  listeners = merge(
+    {
+      http = {
+        port     = 80
+        protocol = "HTTP"
+
+        default_actions = var.ssl_certificate_arn != null ? [
+          {
+            type = "redirect"
+            redirect = {
+              port        = "443"
+              protocol    = "HTTPS"
+              status_code = "HTTP_301"
+            }
+          }
+          ] : [
+          {
+            type             = "forward"
+            target_group_key = "k8s-ingress"
+          }
+        ]
+      }
+    },
+    var.ssl_certificate_arn != null ? {
+      https = {
+        port            = 443
+        protocol        = "HTTPS"
+        ssl_policy      = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+        certificate_arn = var.ssl_certificate_arn
+
+        default_actions = [
+          {
+            type             = "forward"
+            target_group_key = "k8s-ingress"
+          }
+        ]
+      }
+    } : {}
+  )
+
   tags = merge(local.tags, {
-    Name = "${local.name_prefix}-http-listener"
+    Name      = "${local.name_prefix}-alb"
+    Component = "load-balancer"
+    Purpose   = "k8s-ingress"
   })
 }
 
-# HTTPS Listener - conditional on SSL certificate
-resource "aws_lb_listener" "https" {
-  count             = var.ssl_certificate_arn != null ? 1 : 0
-  load_balancer_arn = module.alb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
-  certificate_arn   = var.ssl_certificate_arn
-
-  default_action {
-    type             = "forward"
-    target_group_arn = module.alb.target_groups["k8s_ingress"].arn
-  }
-
-  tags = merge(local.tags, {
-    Name = "${local.name_prefix}-https-listener"
-  })
-}

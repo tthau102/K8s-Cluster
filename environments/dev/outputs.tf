@@ -114,14 +114,14 @@ output "alb_info" {
     dns_name          = module.alb.dns_name
     arn               = module.alb.arn
     hosted_zone_id    = module.alb.zone_id
-    target_group_arns = module.alb.target_groups.arns
+    target_group_arns = [for tg_key, tg_value in module.alb.target_groups : tg_value.arn]
   }
 }
 
 # ALB endpoint cho external access
 output "cluster_endpoint" {
   description = "Public endpoint để access K8s cluster qua ALB"
-  value       = var.ssl_certificate_arn != null ? "https://${module.alb.lb_dns_name}" : "http://${module.alb.lb_dns_name}"
+  value       = var.ssl_certificate_arn != null ? "https://${module.alb.dns_name}" : "http://${module.alb.dns_name}"
 }
 
 # ===========================================

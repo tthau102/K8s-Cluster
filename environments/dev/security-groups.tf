@@ -46,7 +46,7 @@ module "k8s_master_sg" {
       from_port   = 2379
       to_port     = 2380
       protocol    = "tcp"
-      description = "etcd server client API và peer communication"
+      description = "etcd server client API and peer communication"
     },
     {
       from_port   = 10251
@@ -96,7 +96,7 @@ module "k8s_worker_sg" {
       from_port                = 6443
       to_port                  = 6443
       protocol                 = "tcp"
-      description              = "K8s API proxy từ masters"
+      description              = "K8s API proxy from masters"
       source_security_group_id = module.k8s_master_sg.security_group_id
     }
   ]
@@ -162,14 +162,14 @@ module "alb_sg" {
       from_port   = 80
       to_port     = 80
       protocol    = "tcp"
-      description = "HTTP traffic từ internet"
+      description = "HTTP traffic from internet"
       cidr_blocks = "0.0.0.0/0"
     },
     {
       from_port   = 443
       to_port     = 443
       protocol    = "tcp"
-      description = "HTTPS traffic từ internet"
+      description = "HTTPS traffic from internet"
       cidr_blocks = "0.0.0.0/0"
     }
   ]
@@ -180,7 +180,7 @@ module "alb_sg" {
       from_port                = 30000
       to_port                  = 32767
       protocol                 = "tcp"
-      description              = "NodePort range cho ingress controllers"
+      description              = "NodePort range for ingress controllers"
       source_security_group_id = module.k8s_worker_sg.security_group_id
     }
   ]

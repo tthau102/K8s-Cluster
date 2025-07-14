@@ -28,15 +28,12 @@ module "k8s_masters" {
   subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
   associate_public_ip_address = false # Private instances cho security
 
-  # IAM configuration
+  # IAM configuration - chỉ dùng managed policies
   create_iam_instance_profile = true
   iam_role_description        = "IAM role for K8s master nodes"
   iam_role_policies = {
     # Systems Manager access cho session management
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-
-    # Custom policy cho K8s cloud provider integration
-    K8sMasterPolicy = local.k8s_master_policy
   }
 
   # Storage configuration
@@ -46,11 +43,14 @@ module "k8s_masters" {
       volume_size           = 20    # 20GB cho OS và K8s binaries
       delete_on_termination = true  # Cleanup khi terminate
       encrypted             = true  # Encryption at rest
-      tags = {
-        Name = "${local.name_prefix}-master-${count.index + 1}-root"
-      }
+      # Remove tags từ đây để tránh conflict
     }
   ]
+
+  # Volume tags separate
+  volume_tags = {
+    Name = "${local.name_prefix}-master-${count.index + 1}-root"
+  }
 
   tags = merge(local.tags, {
     Type = "k8s-master"
@@ -89,15 +89,12 @@ module "k8s_workers" {
   subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
   associate_public_ip_address = false # Private instances
 
-  # IAM configuration
+  # IAM configuration - chỉ dùng managed policies
   create_iam_instance_profile = true
   iam_role_description        = "IAM role for K8s worker nodes"
   iam_role_policies = {
     # Systems Manager access
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-
-    # Worker node permissions
-    K8sWorkerPolicy = local.k8s_worker_policy
   }
 
   # Storage configuration - workers cần storage lớn hơn cho pods
@@ -107,11 +104,14 @@ module "k8s_workers" {
       volume_size           = 30    # 30GB cho pods, images, logs
       delete_on_termination = true  # Cleanup
       encrypted             = true  # Security
-      tags = {
-        Name = "${local.name_prefix}-worker-${count.index + 1}-root"
-      }
+      # Remove tags từ đây để tránh conflict
     }
   ]
+
+  # Volume tags separate
+  volume_tags = {
+    Name = "${local.name_prefix}-worker-${count.index + 1}-root"
+  }
 
   # User data script để install K8s (nếu cần)
   # user_data = base64encode(templatefile("${path.module}/user-data.sh", {
@@ -132,4 +132,24 @@ module "k8s_workers" {
     # Backup policy
     Backup = "required"
   })
+}
+
+# Inline policies cho master nodes - separate resources
+resource "aws_iam_role_policy" "k8s_master_policy" {
+  count = var.master_count
+
+  name = "${local.name_prefix}-master-${count.index + 1}-policy"
+  role = module.k8s_masters[count.index].iam_role_name
+
+  policy = local.k8s_master_policy
+}
+
+# Inline policies cho worker nodes - separate resources  
+resource "aws_iam_role_policy" "k8s_worker_policy" {
+  count = var.worker_count
+
+  name = "${local.name_prefix}-worker-${count.index + 1}-policy"
+  role = module.k8s_workers[count.index].iam_role_name
+
+  policy = local.k8s_worker_policy
 }
