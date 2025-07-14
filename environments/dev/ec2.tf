@@ -48,9 +48,10 @@ module "k8s_masters" {
   ]
 
   # Volume tags separate
-  volume_tags = {
+  volume_tags = merge(local.tags, {
     Name = "${local.name_prefix}-master-${count.index + 1}-root"
-  }
+    Type = "k8s-storage"
+  })
 
   tags = merge(local.tags, {
     Type = "k8s-master"
