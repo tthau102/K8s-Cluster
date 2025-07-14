@@ -166,36 +166,4 @@ variable "containerd_version" {
   }
 }
 
-# ===========================================
-# LOAD BALANCER VARIABLES
-# ===========================================
-
-variable "ssl_certificate_arn" {
-  description = "SSL Certificate ARN cho HTTPS listener (null để disable HTTPS)"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = var.ssl_certificate_arn == null || can(regex("^arn:aws:acm:", var.ssl_certificate_arn))
-    error_message = "SSL certificate ARN must be a valid ACM certificate ARN or null."
-  }
-}
-
-variable "enable_deletion_protection" {
-  description = "Enable ALB deletion protection (recommend true cho production)"
-  type        = bool
-  default     = false
-}
-
-variable "access_logs_retention_days" {
-  description = "Number of days để retain ALB access logs"
-  type        = number
-  default     = 30
-
-  validation {
-    condition     = var.access_logs_retention_days >= 1 && var.access_logs_retention_days <= 365
-    error_message = "Access logs retention must be between 1 and 365 days."
-  }
-}
-
 # Note: Local values được định nghĩa trong locals.tf
