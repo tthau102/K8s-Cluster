@@ -58,6 +58,7 @@ output "security_groups" {
   value = {
     k8s_master = module.k8s_master_sg.security_group_id
     k8s_worker = module.k8s_worker_sg.security_group_id
+    alb        = module.alb_sg.security_group_id
   }
 }
 
@@ -102,6 +103,33 @@ output "all_k8s_nodes" {
   )
 }
 
+# ===========================================
+# LOAD BALANCER OUTPUTS
+# ===========================================
+
+# ALB Information
+output "alb_info" {
+  description = "Application Load Balancer details"
+  value = {
+    dns_name         = module.alb.lb_dns_name
+    zone_id          = module.alb.lb_zone_id
+    arn              = module.alb.lb_arn
+    target_group_arn = module.alb.target_group_arns[0]
+    security_group   = module.alb_sg.security_group_id
+    url_http         = "http://${module.alb.lb_dns_name}"
+    url_https        = var.ssl_certificate_arn != null ? "https://${module.alb.lb_dns_name}" : "SSL certificate not configured"
+  }
+}
+
+# # S3 Bucket information cho ALB logs
+# output "alb_logs_s3" {
+#   description = "S3 bucket details for ALB access logs"
+#   value = {
+#     bucket_name = module.alb_logs_s3.s3_bucket_id
+#     bucket_arn  = module.alb_logs_s3.s3_bucket_arn
+#     domain_name = module.alb_logs_s3.s3_bucket_bucket_domain_name
+#   }
+# }
 
 # ===========================================
 # ACCESS & MANAGEMENT OUTPUTS
@@ -144,5 +172,7 @@ output "cluster_summary" {
     worker_count       = var.worker_count
     kubernetes_version = var.kubernetes_version
     first_master_ip    = module.k8s_masters[0].private_ip
+    alb_endpoint       = module.alb.lb_dns_name
+    ssl_enabled        = var.ssl_certificate_arn != null
   }
 }

@@ -166,4 +166,31 @@ variable "containerd_version" {
   }
 }
 
+# ===========================================
+# LOAD BALANCER CONFIGURATION
+# ===========================================
+
+variable "ssl_certificate_arn" {
+  description = "SSL Certificate ARN cho HTTPS listener"
+  type        = string
+  default     = null
+}
+
+variable "enable_deletion_protection" {
+  description = "Enable ALB deletion protection"
+  type        = bool
+  default     = false
+}
+
+variable "access_logs_retention_days" {
+  description = "ALB access logs retention in days"
+  type        = number
+  default     = 30
+
+  validation {
+    condition     = var.access_logs_retention_days >= 1 && var.access_logs_retention_days <= 3653
+    error_message = "Access logs retention must be between 1 and 3653 days."
+  }
+}
+
 # Note: Local values được định nghĩa trong locals.tf
