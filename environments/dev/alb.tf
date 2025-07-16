@@ -5,6 +5,11 @@
 # Internet-facing ALB cho K8s ingress traffic
 # =============================================================================
 
+# ELB Service Account data source cho region ap-east-1
+data "aws_elb_service_account" "main" {
+  region = "ap-east-1"
+}
+
 # Random ID cho unique bucket name
 resource "random_id" "bucket_suffix" {
   byte_length = 4
@@ -26,12 +31,12 @@ module "alb" {
   subnets         = module.vpc.public_subnets
   security_groups = [module.alb_sg.security_group_id]
 
-  # # Access logs configuration
-  # access_logs = {
-  #   bucket  = module.alb_logs_s3.s3_bucket_id
-  #   prefix  = "alb-access-logs"
-  #   enabled = true
-  # }
+  # Access logs configuration
+  access_logs = {
+    bucket  = module.alb_logs_s3.s3_bucket_id
+    prefix  = "alb-access-logs"
+    enabled = true
+  }
 
   # Deletion protection
   enable_deletion_protection = var.enable_deletion_protection
@@ -68,39 +73,25 @@ module "alb" {
     }
   ]
 
-  # # HTTP Listener
-  # http_tcp_listeners = [
-  #   {
-  #     port     = 80
-  #     protocol = "HTTP"
+  # HTTP Listener
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
+    }
+  ]
 
-  #     # Conditional action
-  #     action_type = var.ssl_certificate_arn != null ? "redirect" : "forward"
-
-  #     # HTTPS redirect (nếu có SSL cert)
-  #     redirect = var.ssl_certificate_arn != null ? {
-  #       port        = "443"
-  #       protocol    = "HTTPS"
-  #       status_code = "HTTP_301"
-  #     } : null
-
-  #     # Forward to target group (nếu không có SSL cert)
-  #     target_group_index = var.ssl_certificate_arn != null ? null : 0
-  #   }
-  # ]
-
-  # # HTTPS Listener (chỉ tạo nếu có SSL certificate)
-  # https_listeners = var.ssl_certificate_arn != null ? [
-  #   {
-  #     port               = 443
-  #     protocol           = "HTTPS"
-  #     certificate_arn    = var.ssl_certificate_arn
-  #     target_group_index = 0
-
-  #     # SSL Policy
-  #     ssl_policy = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  #   }
-  # ] : []
+  # HTTPS Listener (chỉ tạo nếu có SSL certificate)
+  https_listeners = var.ssl_certificate_arn != null ? [
+    {
+      port               = 443
+      protocol           = "HTTPS"
+      certificate_arn    = var.ssl_certificate_arn
+      target_group_index = 0
+      ssl_policy         = "ELBSecurityPolicy-TLS-1-2-2017-01"
+    }
+  ] : []
 
   tags = merge(local.tags, {
     Name      = "${local.name_prefix}-alb"
@@ -109,5 +100,5 @@ module "alb" {
     Purpose   = "k8s-ingress"
   })
 
-  # depends_on = [module.alb_logs_s3]
+  depends_on = [module.alb_logs_s3]
 }

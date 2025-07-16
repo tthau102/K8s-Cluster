@@ -7,19 +7,16 @@ variable "project" {
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "ap-southeast-5"
 }
 
 variable "environment" {
   description = "Environment name"
   type        = string
-  default     = "backend"
 }
 
 variable "owner" {
   description = "Owner of the resources"
   type        = string
-  default     = "devops-team"
 }
 
 locals {

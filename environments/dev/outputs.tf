@@ -121,15 +121,15 @@ output "alb_info" {
   }
 }
 
-# # S3 Bucket information cho ALB logs
-# output "alb_logs_s3" {
-#   description = "S3 bucket details for ALB access logs"
-#   value = {
-#     bucket_name = module.alb_logs_s3.s3_bucket_id
-#     bucket_arn  = module.alb_logs_s3.s3_bucket_arn
-#     domain_name = module.alb_logs_s3.s3_bucket_bucket_domain_name
-#   }
-# }
+# S3 Bucket information cho ALB logs
+output "alb_logs_s3" {
+  description = "S3 bucket details for ALB access logs"
+  value = {
+    bucket_name = module.alb_logs_s3.s3_bucket_id
+    bucket_arn  = module.alb_logs_s3.s3_bucket_arn
+    domain_name = module.alb_logs_s3.s3_bucket_bucket_domain_name
+  }
+}
 
 # ===========================================
 # ACCESS & MANAGEMENT OUTPUTS
