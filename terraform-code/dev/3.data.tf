@@ -32,6 +32,6 @@ resource "aws_key_pair" "key" {
 }
 
 resource "local_sensitive_file" "key" {
-  filename = "./${aws_key_pair.key.key_name}"
+  filename = "./${aws_key_pair.key.key_name}.pem"
   content  = tls_private_key.this.private_key_openssh
 }

@@ -13,6 +13,7 @@ locals {
     workers = {
       for i, v in module.k8s_workers : "worker0${i + 1}" => v.private_ip
     }
+    loadbalancer = module.loadbalancer.private_ip
   })
 }
 
@@ -28,38 +29,26 @@ resource "local_file" "ansible_inventory" {
     workers = {
       for i, v in module.k8s_workers : "worker0${i + 1}" => v.private_ip
     }
-  })
-}
-
-resource "local_file" "kubespray_hosts" {
-  filename = "./kubespray/hosts.yaml"
-  content = templatefile("${path.module}/templates/kubespray-hosts.tpl", {
-    masters = {
-      for i, v in module.k8s_masters : "master0${i + 1}" => v.private_ip
-    }
-    workers = {
-      for i, v in module.k8s_workers : "worker0${i + 1}" => v.private_ip
-    }
-    cicd_public_ip = module.servers["cicd"].public_ip
+    loadbalancer = module.loadbalancer.private_ip
   })
 }
 
 
-resource "null_resource" "cicd_ansible" {
+resource "null_resource" "lb_ansible" {
   depends_on = [module.vpc, module.servers, local_file.ansible_inventory]
 
   triggers = {
-    "server_id" = module.servers["cicd"].id
+    "server_id" = module.loadbalancer.id
   }
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${module.servers["cicd"].public_ip},' --private-key ${local_sensitive_file.key.filename} -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' playbooks/init-cicd.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${module.loadbalancer.public_ip},' --private-key ${local_sensitive_file.key.filename} -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' playbooks/init-cicd.yml"
   }
 }
 
 
 resource "null_resource" "internal_servers_setup" {
-  depends_on = [null_resource.cicd_ansible]
+  depends_on = [null_resource.lb_ansible]
 
   triggers = {
     inventory_hash = local_file.ansible_inventory.content_base64sha256
@@ -69,7 +58,7 @@ resource "null_resource" "internal_servers_setup" {
     type        = "ssh"
     user        = "ubuntu"
     private_key = tls_private_key.this.private_key_openssh
-    host        = module.servers["cicd"].public_ip
+    host        = module.loadbalancer.public_ip
   }
 
   provisioner "remote-exec" {
@@ -77,8 +66,8 @@ resource "null_resource" "internal_servers_setup" {
   }
 
   provisioner "file" {
-    source      = "./playbooks/init-instance.yml"
-    destination = "/home/ubuntu/playbooks/init-instance.yml"
+    source      = "./playbooks/init-config.yml"
+    destination = "/home/ubuntu/playbooks/init-config.yml"
   }
 
   provisioner "file" {
@@ -88,7 +77,7 @@ resource "null_resource" "internal_servers_setup" {
 
   provisioner "remote-exec" {
     inline = [
-      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/playbooks/init-instance.yml"
+      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/playbooks/init-config.yml"
     ]
   }
 }

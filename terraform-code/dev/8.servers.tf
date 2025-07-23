@@ -28,7 +28,7 @@ module "servers" {
 
   vpc_security_group_ids      = [module.public_sg.security_group_id]
   subnet_id                   = module.vpc.public_subnets[0]
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   create_security_group       = false
 
   root_block_device = {
