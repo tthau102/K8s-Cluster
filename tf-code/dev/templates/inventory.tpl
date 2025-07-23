@@ -1,5 +1,8 @@
 all:
   hosts:
+    loadbalancer:
+      ansible_host: ${loadbalancer}
+      hostname: loadbalancer
 %{ for name, ip in servers ~}
     ${name}:
       ansible_host: ${ip}
