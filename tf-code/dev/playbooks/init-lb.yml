@@ -24,7 +24,7 @@
 
     - name: Set hostname
       hostname:
-        name: cicd
+        name: loadbalancer
 
     - name: Create .ssh directory
       file:

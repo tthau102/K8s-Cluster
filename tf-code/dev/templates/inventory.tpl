@@ -1,7 +1,6 @@
 all:
   hosts:
 %{ for name, ip in servers ~}
-%{ if name != "cicd" ~}
     ${name}:
       ansible_host: ${ip}
       hostname: ${name}
