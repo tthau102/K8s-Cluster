@@ -4,6 +4,7 @@ plan*
 show*
 *.
 !*/
+*.pem
 
 # Terraform
 *.tfstate

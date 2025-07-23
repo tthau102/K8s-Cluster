@@ -15,7 +15,7 @@ locals {
     Project     = var.project
     Environment = var.environment
     Owner       = var.owner
-    Manged_by   = "terraform"
+    Managed_by  = "terraform"
   }
 }
 
