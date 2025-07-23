@@ -1,0 +1,59 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Wait for SSH connection
+      wait_for_connection:
+        timeout: 300
+
+    - name: Add hosts entries
+      blockinfile:
+        path: /etc/hosts
+        block: "{{ hosts_entries | b64decode }}"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
+    - name: Set password for ubuntu user
+      user:
+        name: ubuntu
+        password: "{{ 'Ubuntu' | password_hash('sha512') }}"
+
+    - name: Set timezone
+      timezone:
+        name: Asia/Ho_Chi_Minh
+
+    - name: Set hostname
+      hostname:
+        name: cicd
+
+    - name: Create .ssh directory
+      file:
+        path: /home/ubuntu/.ssh
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0700'
+
+    - name: Copy SSH private key
+      copy:
+        src: "{{ ansible_ssh_private_key_file }}"
+        dest: /home/ubuntu/.ssh/id_rsa
+        owner: ubuntu
+        group: ubuntu
+        mode: '0400'
+
+    - name: Create SSH config for internal network
+      copy:
+        content: |
+          StrictHostKeyChecking no
+          UserKnownHostsFile /dev/null
+        dest: /home/ubuntu/.ssh/config
+        owner: ubuntu
+        group: ubuntu
+        mode: '0600'
+
+    - name: Install ansible
+      apt:
+        name: ansible
+        state: present
+        update_cache: yes

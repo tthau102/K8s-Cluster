@@ -1,11 +1,14 @@
-# backend/variables.tf
-variable "project" {
-  description = "Project name"
-  type        = string
-}
+# shared-backend/variables.tf
+
+
 
 variable "region" {
   description = "AWS region"
+  type        = string
+}
+
+variable "project" {
+  description = "Project name"
   type        = string
 }
 
@@ -19,6 +22,7 @@ variable "owner" {
   type        = string
 }
 
+
 locals {
   name_prefix = "${var.owner}-${var.project}-${var.environment}"
 
@@ -26,6 +30,6 @@ locals {
     Project     = var.project
     Environment = var.environment
     Owner       = var.owner
-    Managed_by  = "terraform"
+    Manged_by   = "terraform"
   }
 }

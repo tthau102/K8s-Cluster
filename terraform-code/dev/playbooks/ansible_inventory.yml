@@ -1,0 +1,28 @@
+all:
+  hosts:
+    gitlab:
+      ansible_host: 10.25.10.10
+      hostname: gitlab
+    rancher:
+      ansible_host: 10.25.10.155
+      hostname: rancher
+    master01:
+      ansible_host: 10.25.0.170
+      hostname: master01
+    master02:
+      ansible_host: 10.25.1.250
+      hostname: master02
+    master03:
+      ansible_host: 10.25.2.16
+      hostname: master03
+    worker01:
+      ansible_host: 10.25.0.143
+      hostname: worker01
+    worker02:
+      ansible_host: 10.25.1.32
+      hostname: worker02
+    worker03:
+      ansible_host: 10.25.2.104
+      hostname: worker03
+  vars:
+    ansible_user: ubuntu
