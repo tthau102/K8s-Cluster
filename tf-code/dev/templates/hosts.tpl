@@ -1,4 +1,5 @@
 #Loadbalancer
+${loadbalancer} loadbalancer
 
 # Servers
 %{ for name, ip in servers ~}
