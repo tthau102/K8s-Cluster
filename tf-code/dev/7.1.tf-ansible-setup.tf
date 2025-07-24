@@ -67,17 +67,17 @@ resource "null_resource" "internal_servers_setup" {
 
   provisioner "file" {
     source      = "./playbooks/init-config.yml"
-    destination = "/home/ubuntu/playbooks/init-config.yml"
+    destination = "/home/ubuntu/ansible/playbooks/init-config.yml"
   }
 
   provisioner "file" {
     source      = "./playbooks/ansible_inventory.yml"
-    destination = "/home/ubuntu/inventory.yml"
+    destination = "/home/ubuntu/ansible/inventory.yml"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/playbooks/init-config.yml"
+      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/ansible/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/playbooks/init-config.yml"
     ]
   }
 }
