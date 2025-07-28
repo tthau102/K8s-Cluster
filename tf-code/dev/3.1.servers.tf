@@ -1,4 +1,4 @@
-# dev/ec2.tf 
+# dev/3.1.servers.tf 
 
 
 variable "servers" {

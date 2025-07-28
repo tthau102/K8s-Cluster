@@ -1,3 +1,6 @@
+# shared-backend/5.backend-to-dev.tf
+
+
 locals {
   backend_config = {
     s3_bucket_name      = module.tf_state_bucket.s3_bucket_id
@@ -11,5 +14,5 @@ resource "local_file" "backend_dev" {
     local.backend_config,
     { environment = "dev" }
   ))
-  filename = "${path.module}/../dev/2.backend.tf"
+  filename = "${path.module}/../dev/1.1.backend.tf"
 }
