@@ -147,6 +147,21 @@ module "worker_sg" {
       description = "Calico BGP"
       cidr_blocks = var.vpc_cidr
     },
+    {
+      from_port   = 4789
+      to_port     = 4789
+      protocol    = "udp"
+      description = "Flannel VXLAN"
+      cidr_blocks = var.vpc_cidr
+    },
+    # Calico IPIP
+    {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "4" # IPIP protocol
+      description = "Calico IPIP"
+      cidr_blocks = var.vpc_cidr
+    },
   ]
 
   # Allow communication from masters

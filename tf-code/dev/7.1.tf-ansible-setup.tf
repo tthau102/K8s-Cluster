@@ -62,7 +62,9 @@ resource "null_resource" "internal_servers_setup" {
   }
 
   provisioner "remote-exec" {
-    inline = ["mkdir playbooks"]
+    inline = [
+      "mkdir -p ansible/playbooks"
+    ]
   }
 
   provisioner "file" {

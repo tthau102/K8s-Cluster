@@ -1,0 +1,40 @@
+all:
+  children:
+    loadbalancer:
+      hosts:
+        loadbalancer:
+          ansible_host: 10.25.11.30
+          hostname: loadbalancer
+    servers:
+      hosts:
+        cicd:
+          ansible_host: 10.25.0.197
+          hostname: cicd
+        gitlab:
+          ansible_host: 10.25.0.98
+          hostname: gitlab
+        rancher:
+          ansible_host: 10.25.0.190
+          hostname: rancher
+    masters:
+      hosts:
+        master01:
+          ansible_host: 10.25.0.77
+          hostname: master01
+        master02:
+          ansible_host: 10.25.1.153
+          hostname: master02
+        master03:
+          ansible_host: 10.25.2.189
+          hostname: master03
+    workers:
+      hosts:
+        worker01:
+          ansible_host: 10.25.0.219
+          hostname: worker01
+        worker02:
+          ansible_host: 10.25.1.117
+          hostname: worker02
+        worker03:
+          ansible_host: 10.25.2.170
+          hostname: worker03
