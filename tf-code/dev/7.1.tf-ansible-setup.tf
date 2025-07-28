@@ -35,7 +35,7 @@ resource "local_file" "ansible_inventory" {
 
 
 resource "null_resource" "lb_ansible" {
-  depends_on = [module.vpc, module.servers, local_file.ansible_inventory]
+  depends_on = [module.vpc, module.servers, module.k8s_masters, module.k8s_workers, local_file.ansible_inventory]
 
   triggers = {
     "server_id" = module.loadbalancer.id

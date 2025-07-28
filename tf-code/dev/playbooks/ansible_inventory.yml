@@ -19,22 +19,22 @@ all:
     masters:
       hosts:
         master01:
-          ansible_host: 10.25.0.216
+          ansible_host: 10.25.0.123
           hostname: master01
         master02:
-          ansible_host: 10.25.1.185
+          ansible_host: 10.25.1.230
           hostname: master02
         master03:
-          ansible_host: 10.25.2.173
+          ansible_host: 10.25.2.187
           hostname: master03
     workers:
       hosts:
         worker01:
-          ansible_host: 10.25.0.77
+          ansible_host: 10.25.0.28
           hostname: worker01
         worker02:
-          ansible_host: 10.25.1.224
+          ansible_host: 10.25.1.225
           hostname: worker02
         worker03:
-          ansible_host: 10.25.2.221
+          ansible_host: 10.25.2.76
           hostname: worker03

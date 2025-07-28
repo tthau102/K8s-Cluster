@@ -29,6 +29,8 @@ module "k8s_workers" {
   subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
   associate_public_ip_address = false
 
+  source_dest_check = false
+
   enable_volume_tags = false
   root_block_device = {
     type = "gp3"
