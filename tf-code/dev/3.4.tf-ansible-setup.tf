@@ -1,4 +1,4 @@
-# /dev/7.1.dynamic-tf-ansible.tf
+# /dev/3.4.tf-ansible-setup.tf
 
 
 
@@ -79,7 +79,7 @@ resource "null_resource" "internal_servers_setup" {
 
   provisioner "remote-exec" {
     inline = [
-      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/ansible/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/playbooks/init-config.yml"
+      "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /home/ubuntu/ansible/inventory.yml -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' /home/ubuntu/ansible/playbooks/init-config.yml"
     ]
   }
 }

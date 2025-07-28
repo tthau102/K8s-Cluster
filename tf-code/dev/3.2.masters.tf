@@ -1,29 +1,36 @@
-# /dev/7.lb.tf
+# dev/3.2.masters.tf
 
 
-variable "lb_config" {
-  type = object({
-    name          = string
-    instance_type = string
-  })
+
+
+variable "master_count" {
+  type = number
 }
 
-module "loadbalancer" {
+variable "master_instance_type" {
+  type = string
+}
+
+module "k8s_masters" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "6.0.2"
 
-  name = "${local.name_prefix}-${var.lb_config.name}"
+  count = var.master_count
+
+  name = "${local.name_prefix}-master-0${count.index + 1}"
 
   ami           = data.aws_ami.ubuntu.id
-  instance_type = var.lb_config.instance_type
+  instance_type = var.master_instance_type
   key_name      = aws_key_pair.key.key_name
 
   monitoring = true
 
   create_security_group       = false
-  vpc_security_group_ids      = [module.public_sg.security_group_id]
-  subnet_id                   = module.vpc.public_subnets[1]
-  associate_public_ip_address = true
+  vpc_security_group_ids      = [module.master_sg.security_group_id]
+  subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
+  associate_public_ip_address = false
+
+  source_dest_check = false
 
   enable_volume_tags = false
   root_block_device = {
@@ -32,7 +39,7 @@ module "loadbalancer" {
     delete_on_termination = true
     encrypted             = true
     tags = {
-      Name = "${local.name_prefix}-${var.lb_config.name}-root"
+      Name = "${local.name_prefix}-master-${count.index + 1}-root"
     }
   }
 
@@ -45,3 +52,5 @@ module "loadbalancer" {
     }
   }
 }
+
+
