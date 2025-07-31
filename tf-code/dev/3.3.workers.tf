@@ -25,8 +25,8 @@ module "k8s_workers" {
   monitoring = true
 
   create_security_group       = false
-  vpc_security_group_ids      = [module.worker_sg.security_group_id]
-  subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
+  vpc_security_group_ids      = [module.private_sg.security_group_id]
+  subnet_id                   = module.vpc.private_subnets[0]
   associate_public_ip_address = false
 
   source_dest_check = false
@@ -44,10 +44,10 @@ module "k8s_workers" {
 
   ebs_volumes = {
     "/dev/sdf" = {
-      type = "gp3"
-      size = 20
-      # delete_on_termination = true
-      encrypted = true
+      type                  = "gp3"
+      size                  = 20
+      delete_on_termination = true
+      encrypted             = true
     }
   }
 }

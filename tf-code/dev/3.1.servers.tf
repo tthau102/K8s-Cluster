@@ -26,7 +26,7 @@ module "servers" {
 
   monitoring = true
 
-  vpc_security_group_ids      = [module.public_sg.security_group_id]
+  vpc_security_group_ids      = [module.private_sg.security_group_id]
   subnet_id                   = module.vpc.private_subnets[0]
   associate_public_ip_address = false
   create_security_group       = false

@@ -1,0 +1,39 @@
+all:
+  hosts:
+    master01:
+      ansible_host: 10.25.0.216
+    master02:
+      ansible_host: 10.25.0.41
+    master03:
+      ansible_host: 10.25.0.185
+    worker01:
+      ansible_host: 10.25.0.57
+    worker02:
+      ansible_host: 10.25.0.148
+    worker03:
+      ansible_host: 10.25.0.243
+  children:
+    kube_control_plane:
+      hosts:
+        master01:
+        master02:
+        master03:
+    kube_node:
+      hosts:
+        master01:
+        master02:
+        master03:
+        worker01:
+        worker02:
+        worker03:
+    etcd:
+      hosts:
+        master01:
+        master02:
+        master03:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}

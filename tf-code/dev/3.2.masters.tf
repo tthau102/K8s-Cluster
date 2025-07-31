@@ -26,8 +26,8 @@ module "k8s_masters" {
   monitoring = true
 
   create_security_group       = false
-  vpc_security_group_ids      = [module.master_sg.security_group_id]
-  subnet_id                   = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
+  vpc_security_group_ids      = [module.private_sg.security_group_id]
+  subnet_id                   = module.vpc.private_subnets[0]
   associate_public_ip_address = false
 
   source_dest_check = false

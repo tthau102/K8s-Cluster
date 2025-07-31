@@ -83,3 +83,15 @@ resource "null_resource" "internal_servers_setup" {
     ]
   }
 }
+
+resource "local_file" "kubespray_hosts" {
+  filename = "./kubespray/inventory/mycluster/hosts.yaml"
+  content = templatefile("${path.module}/templates/kubespray-hosts.tpl", {
+    masters = {
+      for i, v in module.k8s_masters : "master0${i + 1}" => v.private_ip
+    }
+    workers = {
+      for i, v in module.k8s_workers : "worker0${i + 1}" => v.private_ip
+    }
+  })
+}
