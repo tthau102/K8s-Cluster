@@ -1,17 +1,17 @@
 all:
   hosts:
     master01:
-      ansible_host: 10.25.0.216
+      ansible_host: 10.25.0.122
     master02:
-      ansible_host: 10.25.0.41
+      ansible_host: 10.25.0.44
     master03:
-      ansible_host: 10.25.0.185
+      ansible_host: 10.25.0.84
     worker01:
-      ansible_host: 10.25.0.57
+      ansible_host: 10.25.0.97
     worker02:
-      ansible_host: 10.25.0.148
+      ansible_host: 10.25.0.108
     worker03:
-      ansible_host: 10.25.0.243
+      ansible_host: 10.25.0.201
   children:
     kube_control_plane:
       hosts:
