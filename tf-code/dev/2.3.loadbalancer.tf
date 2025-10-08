@@ -2,20 +2,25 @@
 
 
 variable "lb_config" {
-  type = object({
+  type = list(object({
     name          = string
     instance_type = string
-  })
+  }))
+}
+
+locals {
+  lb_map = { for i in var.lb_config : i.name => i }
 }
 
 module "loadbalancer" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "6.0.2"
 
-  name = "${local.name_prefix}-${var.lb_config.name}"
+  for_each = local.lb_map
+  name     = "${local.name_prefix}-${each.key}"
 
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.lb_config.instance_type
+  ami           = var.aws_ami
+  instance_type = each.value.instance_type
   key_name      = aws_key_pair.key.key_name
 
   monitoring = true
@@ -32,7 +37,7 @@ module "loadbalancer" {
     delete_on_termination = true
     encrypted             = true
     tags = {
-      Name = "${local.name_prefix}-${var.lb_config.name}-root"
+      Name = "${local.name_prefix}-${each.key}-root"
     }
   }
 

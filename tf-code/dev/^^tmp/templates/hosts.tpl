@@ -1,5 +1,8 @@
 #Loadbalancer
 ${loadbalancer} loadbalancer
+%{ for name, ip in loadbalancer ~}
+${ip} ${name}
+%{ endfor ~}
 
 # Servers
 %{ for name, ip in servers ~}

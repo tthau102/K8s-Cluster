@@ -35,3 +35,8 @@ variable "owner" {
     error_message = "Owner must contain only lowercase letters, numbers and hyphens"
   }
 }
+
+variable "aws_ami" {
+  description = "aws ami"
+  type        = string
+}

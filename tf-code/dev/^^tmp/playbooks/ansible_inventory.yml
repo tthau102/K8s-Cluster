@@ -3,7 +3,7 @@ all:
     loadbalancer:
       hosts:
         loadbalancer:
-          ansible_host: 10.25.10.194
+          ansible_host: 10.25.10.253
           hostname: loadbalancer
     servers:
       hosts:
@@ -21,20 +21,11 @@ all:
         master01:
           ansible_host: 10.25.0.122
           hostname: master01
-        master02:
-          ansible_host: 10.25.0.44
-          hostname: master02
-        master03:
-          ansible_host: 10.25.0.84
-          hostname: master03
     workers:
       hosts:
         worker01:
-          ansible_host: 10.25.0.97
+          ansible_host: 10.25.0.111
           hostname: worker01
         worker02:
-          ansible_host: 10.25.0.108
+          ansible_host: 10.25.0.63
           hostname: worker02
-        worker03:
-          ansible_host: 10.25.0.201
-          hostname: worker03

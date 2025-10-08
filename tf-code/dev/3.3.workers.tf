@@ -18,7 +18,7 @@ module "k8s_workers" {
 
   name = "${local.name_prefix}-worker-0${count.index + 1}"
 
-  ami           = data.aws_ami.ubuntu.id
+  ami           = var.aws_ami
   instance_type = var.worker_instance_type
   key_name      = aws_key_pair.key.key_name
 

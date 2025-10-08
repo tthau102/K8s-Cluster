@@ -4,7 +4,7 @@
 
 locals {
   hosts_entries = templatefile("${path.module}/templates/hosts.tpl", {
-    loadbalancer = module.loadbalancer.private_ip
+    loadbalancer = module.loadbalancer["lb"].private_ip
     servers = {
       for k, v in module.servers : k => v.private_ip
     }
@@ -20,7 +20,7 @@ locals {
 resource "local_file" "ansible_inventory" {
   filename = "./playbooks/ansible_inventory.yml"
   content = templatefile("${path.module}/templates/inventory.tpl", {
-    loadbalancer = module.loadbalancer.private_ip
+    loadbalancer = module.loadbalancer["lb"].private_ip
     servers = {
       for k, v in module.servers : k => v.private_ip
     }
@@ -38,11 +38,11 @@ resource "null_resource" "lb_ansible" {
   depends_on = [module.vpc, module.servers, module.k8s_masters, module.k8s_workers, local_file.ansible_inventory]
 
   triggers = {
-    "server_id" = module.loadbalancer.id
+    "server_id" = module.loadbalancer["lb"].id
   }
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${module.loadbalancer.public_ip},' --private-key ${local_sensitive_file.key.filename} -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' playbooks/init-lb.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${module.loadbalancer["lb"].public_ip},' --private-key ${local_sensitive_file.key.filename} -u ubuntu -e 'hosts_entries=${base64encode(local.hosts_entries)}' playbooks/init-lb.yml"
   }
 }
 
@@ -58,7 +58,7 @@ resource "null_resource" "internal_servers_setup" {
     type        = "ssh"
     user        = "ubuntu"
     private_key = tls_private_key.this.private_key_openssh
-    host        = module.loadbalancer.public_ip
+    host        = module.loadbalancer["lb"].public_ip
   }
 
   provisioner "remote-exec" {

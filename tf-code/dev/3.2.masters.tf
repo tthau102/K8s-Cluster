@@ -19,7 +19,7 @@ module "k8s_masters" {
 
   name = "${local.name_prefix}-master-0${count.index + 1}"
 
-  ami           = data.aws_ami.ubuntu.id
+  ami           = var.aws_ami
   instance_type = var.master_instance_type
   key_name      = aws_key_pair.key.key_name
 

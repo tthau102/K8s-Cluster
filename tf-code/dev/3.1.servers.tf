@@ -20,7 +20,7 @@ module "servers" {
   for_each = local.servers_map
   name     = "${local.name_prefix}-${each.key}"
 
-  ami           = data.aws_ami.ubuntu.id
+  ami           = var.aws_ami
   instance_type = each.value.instance_type
   key_name      = aws_key_pair.key.key_name
 
