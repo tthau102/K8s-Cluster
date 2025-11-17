@@ -1,0 +1,115 @@
+# 1. Deployment và Service cho test app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-test-app
+  namespace: default
+  labels:
+    app: nginx-test-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-test-app
+  template:
+    metadata:
+      labels:
+        app: nginx-test-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: nginx-html
+---
+# 2. ConfigMap chứa HTML content
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-html
+  namespace: default
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>HTTPS Test App - K8s Cluster</title>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                text-align: center; 
+                padding: 50px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+            .container {
+                background: rgba(255,255,255,0.1);
+                padding: 30px;
+                border-radius: 10px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            .status { color: #00ff00; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 HTTPS Test App</h1>
+            <h2>Kubernetes Cluster with SSL</h2>
+            <p class="status">✅ HTTPS Connection Established</p>
+            <p>🌐 Domain: test.k8s.onprem.thweb.click</p>
+            <p>🔒 SSL Certificate: Let's Encrypt</p>
+            <p>⚡ Load Balancer: nginx</p>
+            <p>🎯 Ingress Controller: nginx-ingress</p>
+            <hr>
+            <p><strong>Server Info:</strong></p>
+            <p>Pod Host: <span id="hostname"></span></p>
+            <p>Current Time: <span id="time"></span></p>
+        </div>
+        <script>
+            document.getElementById('hostname').textContent = location.hostname;
+            document.getElementById('time').textContent = new Date().toLocaleString();
+        </script>
+    </body>
+    </html>
+---
+# 3. Service expose cho deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test-svc
+  namespace: default
+spec:
+  selector:
+    app: nginx-test-app
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+---
+# 4. Ingress với SSL configuration
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-test-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: app.k8s.onprem.thweb.click
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-test-svc
+            port:
+              number: 80
