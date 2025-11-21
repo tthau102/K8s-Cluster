@@ -1,0 +1,8 @@
+nfs:
+  server: rancher
+  path: /data/k8s-retain
+storageClass:
+  name: nfs-retain
+  provisionerName: tth-nfs-retain
+  reclaimPolicy: Retain
+  defaultClass: true

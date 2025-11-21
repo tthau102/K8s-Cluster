@@ -1,0 +1,8 @@
+nfs:
+  server: rancher
+  path: /data/k8s-delete
+storageClass:
+  name: nfs-delete
+  provisionerName: tth-nfs-delete
+  reclaimPolicy: Delete
+  defaultClass: false
